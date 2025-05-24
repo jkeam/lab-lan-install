@@ -3,8 +3,10 @@ kind: AgentConfig
 metadata:
   name: lab
 rendezvousIP: 192.168.1.202
+additionalNTPSources:
+  - 192.168.1.201
 hosts:
-  - hostname: master
+  - hostname: master1
     role: master
     interfaces:
       - name: enp2s0

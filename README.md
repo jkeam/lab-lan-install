@@ -5,6 +5,14 @@ This is the installation for my OpenShift Cluster lab.
 ## Prerequisite
 
 1. Pull secret named `pull-secret`
+2. DNS entries for
+
+    ```shell
+    api.lab.lan
+    api-int.lab.lan
+    master1.lab.lan
+    *.apps.lab.lan
+    ```
 
 ## Setup
 
