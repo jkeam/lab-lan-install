@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: chatbot-cert
+  namespace: chatbot
+spec:
+  isCA: false
+  secretName: chatbot-cert-tls-secret
+  issuerRef:
+    name: letsencrypt-digitalocean
+    kind: ClusterIssuer
+  dnsNames:
+  - keam.org
+  - '*.keam.org'

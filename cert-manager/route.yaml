@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: chatbot-tls
+  labels:
+    app: chatbot
+spec:
+  host: chatbot.keam.org
+  to:
+    kind: Service
+    name: chatbot
+    weight: 100
+  port:
+    targetPort: port8080
+  tls:
+    termination: edge
+    externalCertificate:
+      name: chatbot-cert-tls-secret

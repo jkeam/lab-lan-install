@@ -100,6 +100,27 @@ nmcli con down "Wired connection 1"
 nmcli con up "Wired connection 1"
 ```
 
+## Cert Manager
+
+1. Install cert-manager operator into the default namespace.
+2. Run the following
+
+    ```shell
+    oc new-project cert-manager
+    oc apply -k ./cert-manager
+    ```
+
+3. Create cert for app
+
+    ```shell
+    oc project chatbot
+    oc apply -f ./cert-manager/certificate.yaml
+    # wait a bit for the dns propagation to take place,
+    #  after secret named chatbot-cert-tls-secret appears
+    #  then apply below
+    oc apply -f ./cert-manager/route.yaml
+    ```
+
 ## Links
 
 1. [NMState](https://access.redhat.com/solutions/7020319)
