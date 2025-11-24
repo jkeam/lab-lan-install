@@ -1,11 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: chatbot-cert
-  namespace: chatbot
+  name: app-cert
 spec:
   isCA: false
-  secretName: chatbot-cert-tls-secret
+  secretName: app-cert-tls-secret
   issuerRef:
     name: letsencrypt-digitalocean
     kind: ClusterIssuer

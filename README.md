@@ -103,21 +103,23 @@ nmcli con up "Wired connection 1"
 ## Cert Manager
 
 1. Install cert-manager operator into the default namespace.
-2. Run the following
+2. Run the following:
 
     ```shell
     oc new-project cert-manager
     oc apply -k ./cert-manager
     ```
 
-3. Create cert for app
+3. Create cert for app, do this for every app.
 
     ```shell
     oc project chatbot
+    # Optionally update the values in manifest
     oc apply -f ./cert-manager/certificate.yaml
-    # wait a bit for the dns propagation to take place,
-    #  after secret named chatbot-cert-tls-secret appears
-    #  then apply below
+    # Wait a bit for the dns propagation to take place,
+    #   after secret named app-cert-tls-secret appears then apply below
+    # Update the values <replace-me> in manifest
+    #   as well as keam.org with your domain name
     oc apply -f ./cert-manager/route.yaml
     ```
 
