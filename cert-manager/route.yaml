@@ -15,4 +15,4 @@ spec:
   tls:
     termination: edge
     externalCertificate:
-      name: app-cert-tls-secret
+      name: app-tls-cert-secret

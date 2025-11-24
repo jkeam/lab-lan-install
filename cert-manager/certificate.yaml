@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: app-cert
+  name: app-tls-cert
 spec:
   isCA: false
-  secretName: app-cert-tls-secret
+  secretName: app-tls-cert-secret
   issuerRef:
     name: letsencrypt-digitalocean
     kind: ClusterIssuer
