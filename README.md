@@ -123,6 +123,23 @@ nmcli con up "Wired connection 1"
     oc apply -f ./cert-manager/route.yaml
     ```
 
+## AMD ROCm
+
+```shell
+# Add helm chart
+helm repo add rocm https://rocm.github.io/gpu-operator
+helm repo update
+
+# Install operator
+helm install amd-gpu-operator rocm/gpu-operator-charts \
+  --namespace kube-amd-gpu \
+  --create-namespace \
+  --version=v1.4.0
+
+# DeviceConfig custom resource is automatically created, to edit:
+kubectl edit deviceconfigs -n kube-amd-gpu default
+```
+
 ## Links
 
 1. [NMState](https://access.redhat.com/solutions/7020319)
@@ -130,3 +147,4 @@ nmcli con up "Wired connection 1"
 3. [Bare metal install docs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_an_on-premise_cluster_with_the_agent-based_installer/index)
 4. [Bare metal install troubleshooting docs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_an_on-premise_cluster_with_the_agent-based_installer/installing-with-agent-basic#installing-ocp-agent-gather-log_installing-with-agent-basic)
 5. [Adding bare metal worker nodes to SNO](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html-single/nodes/index#nodes-sno-worker-nodes)
+6. [AMD ROCm GPU Operator](https://github.com/ROCm/gpu-operator)
