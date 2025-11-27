@@ -125,20 +125,32 @@ nmcli con up "Wired connection 1"
 
 ## AMD ROCm
 
-```shell
-# Add helm chart
-helm repo add rocm https://rocm.github.io/gpu-operator
-helm repo update
+### Installation
 
-# Install operator
-helm install amd-gpu-operator rocm/gpu-operator-charts \
-  --namespace kube-amd-gpu \
-  --create-namespace \
-  --version=v1.4.0
+1. Install [NFD](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/specialized_hardware_and_driver_enablement/psap-node-feature-discovery-operator)
+2. Create NodeFeatureDiscovery object like [this](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/installation/openshift-olm.html#create-node-feature-discovery-rule)
+3. Install [KMM](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/specialized_hardware_and_driver_enablement/kernel-module-management-operator), not the Hub one
+4. Install AMD GPU Operator, can use the latest below or use the `Certified`
+version from the Operator Hub by searching for `amd`
 
-# DeviceConfig custom resource is automatically created, to edit:
-kubectl edit deviceconfigs -n kube-amd-gpu default
-```
+    ```shell
+    # Add helm chart
+    helm repo add rocm https://rocm.github.io/gpu-operator
+    helm repo update
+
+    # Install operator
+    helm install amd-gpu-operator rocm/gpu-operator-charts \
+      --namespace kube-amd-gpu \
+      --create-namespace \
+      --version=v1.4.0
+
+    # DeviceConfig custom resource is automatically created, to edit:
+    kubectl edit deviceconfigs -n kube-amd-gpu default
+    ```
+
+### Architecture
+
+![AMD Architecture](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/_images/amd-gpu-operator-diagram.png)
 
 ## Links
 
@@ -147,4 +159,5 @@ kubectl edit deviceconfigs -n kube-amd-gpu default
 3. [Bare metal install docs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_an_on-premise_cluster_with_the_agent-based_installer/index)
 4. [Bare metal install troubleshooting docs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_an_on-premise_cluster_with_the_agent-based_installer/installing-with-agent-basic#installing-ocp-agent-gather-log_installing-with-agent-basic)
 5. [Adding bare metal worker nodes to SNO](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html-single/nodes/index#nodes-sno-worker-nodes)
-6. [AMD ROCm GPU Operator](https://github.com/ROCm/gpu-operator)
+6. [AMD GPU Operator](https://github.com/ROCm/gpu-operator)
+7. [AMD GPU Docs](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/overview.html)
