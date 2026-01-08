@@ -8,10 +8,12 @@ This is the installation for my OpenShift Cluster lab.
 2. DNS entries for
 
     ```shell
-    api.lab.lan
-    api-int.lab.lan
-    master1.lab.lan
-    *.apps.lab.lan
+    api.lab.keam.org
+    api-int.lab.keam.org
+    master1.lab.keam.org
+    *.apps.lab.keam.org
+
+    # Make sure there is no entry for *.lab.keam.org as that is known to cause issues.
     ```
 
 ## Setup
