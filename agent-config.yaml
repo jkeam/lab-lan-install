@@ -8,6 +8,8 @@ additionalNTPSources:
 hosts:
   - hostname: master1
     role: master
+    rootDeviceHints:
+      deviceName: "/dev/nvme0n1"
     interfaces:
       - name: enp2s0
         macAddress: 0c:42:a1:55:f3:06
