@@ -59,6 +59,32 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
 # ssh core@<node-ip> agent-gather -O >agent-gather.tar.xz
 ```
 
+## GitHub OAuth
+
+1. Create GitHub OAuth app with info:
+
+    ```properties
+    name: whatever you want
+    homepage_url: https://oauth-openshift.apps.<cluster-name>.<cluster-domain>.
+    callback_url: https://oauth-openshift.apps.<cluster-name>.<cluster-domain>/oauth2callback/github
+    ```
+
+and get the generated Client Id and Client Secret
+
+2. Take those values and update `./github/oauth.yaml` and `./github/github-oauth-secret.yaml` respectively
+
+3. Create the secret
+
+    ```shell
+    oc apply -f ./github/github-oauth-secret.yaml
+    ```
+
+4. Edit OpenShift OAuth
+
+    ```shell
+    oc edit oauth/cluster  # add in the data from ./github/oauth.yaml
+    ```
+
 ## Adding Nodes
 
 From my linux desktop:
@@ -163,3 +189,4 @@ version from the Operator Hub by searching for `amd`
 5. [Adding bare metal worker nodes to SNO](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html-single/nodes/index#nodes-sno-worker-nodes)
 6. [AMD GPU Operator](https://github.com/ROCm/gpu-operator)
 7. [AMD GPU Docs](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/overview.html)
+8. [GitHub Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-github-identity-provider)
