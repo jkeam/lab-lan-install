@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-apps-certificate
+  namespace: openshift-ingress
+spec:
+  privateKey:
+    rotationPolicy: Always
+  secretName: apps-wildcard-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: "*.apps.lab.keam.org"
+  dnsNames:
+  - "*.apps.lab.keam.org"

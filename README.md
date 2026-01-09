@@ -130,7 +130,24 @@ nmcli con up "Wired connection 1"
 
 ## Cert Manager
 
+### Using Http01
+
+This will get the `*.apps` for the ingress.
+
+```shell
+oc apply -k ./cert-manager/ingress
+
+# then patch the ingress operator
+oc patch ingresscontroller.operator default \
+--type=merge -p \
+'{"spec":{"defaultCertificate":{"name":"apps-wildcard-tls"}}}' \
+--namespace=openshift-ingress-operator
+```
+
+### Using DNS
+
 1. Install cert-manager operator into the default namespace.
+
 2. Run the following:
 
     ```shell
