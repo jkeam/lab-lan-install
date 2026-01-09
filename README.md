@@ -130,45 +130,25 @@ nmcli con up "Wired connection 1"
 
 ## Cert Manager
 
-### Using Http01
-
-This will get the `*.apps` for the ingress.
-
 ```shell
-# following command will take a few minutes
-#   due to the nature of the challenge
-oc apply -k ./cert-manager/ingress
+# create digital ocean api key
+oc apply -f ./cert-manager/secret.yaml  # replace key
 
-# then patch the ingress operator
-oc patch ingresscontroller.operator default \
---type=merge -p \
-'{"spec":{"defaultCertificate":{"name":"apps-wildcard-tls"}}}' \
---namespace=openshift-ingress-operator
+# hook into let's encrypt using the digital ocean dns challenge
+oc apply -f ./cert-manager/issuer.yaml
+
+# create api cert, wait 2 min to create
+oc apply -f ./cert-manager/api-cert.yaml
+
+# create apps cert, wait 2 min to create
+oc apply -f ./cert-manager/router-cert.yaml
+
+# patch api
+oc patch apiserver cluster --type merge --patch="{\"spec\": {\"servingCerts\": {\"namedCertificates\": [ { \"names\": [  \"api.lab.keam.org\"  ], \"servingCertificate\": {\"name\": \"api-certs\" }}]}}}" --insecure-skip-tls-verify
+
+# patch ingress controller for apps
+oc patch ingresscontroller default -n openshift-ingress-operator --type=merge --patch='{"spec": { "defaultCertificate": { "name": "router-certs" }}}' --insecure-skip-tls-verify
 ```
-
-### Using DNS
-
-1. Install cert-manager operator into the default namespace.
-
-2. Run the following:
-
-    ```shell
-    oc new-project cert-manager
-    oc apply -k ./cert-manager
-    ```
-
-3. Create cert for app, do this for every app.
-
-    ```shell
-    oc project chatbot
-    # Optionally update the values in manifest
-    oc apply -f ./cert-manager/certificate.yaml
-    # Wait a bit for the dns propagation to take place,
-    #   after secret named app-cert-tls-secret appears then apply below
-    # Update the values <replace-me> in manifest
-    #   as well as keam.org with your domain name
-    oc apply -f ./cert-manager/route.yaml
-    ```
 
 ## AMD ROCm
 
@@ -210,3 +190,4 @@ version from the Operator Hub by searching for `amd`
 7. [AMD GPU Docs](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/overview.html)
 8. [GitHub Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-github-identity-provider)
 9. [HTPasswd Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-htpasswd-identity-provider)
+10. [TLS Routes](https://medium.com/@evgeniy.phv/using-cert-manager-in-openshift-okd-part-2-configuration-and-ssl-certificate-installation-fd5a86b734df)
