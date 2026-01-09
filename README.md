@@ -190,3 +190,4 @@ version from the Operator Hub by searching for `amd`
 6. [AMD GPU Operator](https://github.com/ROCm/gpu-operator)
 7. [AMD GPU Docs](https://instinct.docs.amd.com/projects/gpu-operator/en/release-v1.4.0/overview.html)
 8. [GitHub Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-github-identity-provider)
+9. [HTPasswd Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-htpasswd-identity-provider)
