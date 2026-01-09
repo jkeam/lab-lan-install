@@ -135,6 +135,8 @@ nmcli con up "Wired connection 1"
 This will get the `*.apps` for the ingress.
 
 ```shell
+# following command will take a few minutes
+#   due to the nature of the challenge
 oc apply -k ./cert-manager/ingress
 
 # then patch the ingress operator
