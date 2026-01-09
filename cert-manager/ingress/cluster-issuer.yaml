@@ -4,9 +4,11 @@ metadata:
   name: letsencrypt
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    preferredChain: ""
+    email: jpkeam@gmail.com
     privateKeySecretRef:
       name: letsencrypt-account-key
+    server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
     - http01:
         ingress:
