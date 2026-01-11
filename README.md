@@ -61,7 +61,7 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
 
 ## GitHub OAuth
 
-1. Create GitHub OAuth app with info:
+1. Create GitHub OAuth app with info and get the generated Client Id and Client Secret
 
     ```properties
     name: whatever you want
@@ -69,9 +69,8 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
     callback_url: https://oauth-openshift.apps.<cluster-name>.<cluster-domain>/oauth2callback/github
     ```
 
-and get the generated Client Id and Client Secret
-
-2. Take those values and update `./github/oauth.yaml` and `./github/github-oauth-secret.yaml` respectively
+2. Take those values and update
+`./github/oauth.yaml` and `./github/github-oauth-secret.yaml` respectively
 
 3. Create the secret
 
@@ -150,6 +149,26 @@ oc patch apiserver cluster --type merge --patch="{\"spec\": {\"servingCerts\": {
 oc patch ingresscontroller default -n openshift-ingress-operator --type=merge --patch='{"spec": { "defaultCertificate": { "name": "router-certs" }}}' --insecure-skip-tls-verify
 ```
 
+## Garbage Collection
+
+Update GC to be a bit more aggressive in cleaning up disk.
+
+```yaml
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: gc-master-kubeconfig
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      pools.operator.machineconfiguration.openshift.io/master: ""
+  kubeletConfig:
+    evictionPressureTransitionPeriod: 3m
+    imageMinimumGCAge: 5m            # default is 2m
+    imageGCHighThresholdPercent: 70  # default is 85
+    imageGCLowThresholdPercent: 50   # default is 80
+```
+
 ## AMD ROCm
 
 ### Installation
@@ -191,3 +210,4 @@ version from the Operator Hub by searching for `amd`
 8. [GitHub Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-github-identity-provider)
 9. [HTPasswd Auth](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/authentication_and_authorization/configuring-identity-providers#configuring-htpasswd-identity-provider)
 10. [TLS Routes](https://medium.com/@evgeniy.phv/using-cert-manager-in-openshift-okd-part-2-configuration-and-ssl-certificate-installation-fd5a86b734df)
+11. [Node GC](https://docs.redhat.com/en/documentation/openshift_container_platform/4.20/html/nodes/working-with-nodes#nodes-nodes-garbage-collection)
