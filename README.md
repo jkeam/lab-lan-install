@@ -168,7 +168,7 @@ spec:
   kubeletConfig:
     evictionPressureTransitionPeriod: 3m
     imageMinimumGCAge: 5m            # default is 2m
-    imageGCHighThresholdPercent: 70  # default is 85
+    imageGCHighThresholdPercent: 80  # default is 85
     imageGCLowThresholdPercent: 50   # default is 80
 ```
 
