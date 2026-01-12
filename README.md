@@ -61,7 +61,9 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
 
 ## GitHub OAuth
 
-1. Create GitHub OAuth app with info and get the generated Client Id and Client Secret
+1. Create GitHub Organization and update `./github/oauth.yaml`
+
+2. Create GitHub OAuth app with info and get the generated Client Id and Client Secret
 
     ```properties
     name: whatever you want
@@ -69,16 +71,16 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
     callback_url: https://oauth-openshift.apps.<cluster-name>.<cluster-domain>/oauth2callback/github
     ```
 
-2. Take those values and update
+3. Take those values and update
 `./github/oauth.yaml` and `./github/github-oauth-secret.yaml` respectively
 
-3. Create the secret
+4. Create the secret
 
     ```shell
     oc apply -f ./github/github-oauth-secret.yaml
     ```
 
-4. Edit OpenShift OAuth
+5. Edit OpenShift OAuth
 
     ```shell
     oc edit oauth/cluster  # add in the data from ./github/oauth.yaml
