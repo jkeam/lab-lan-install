@@ -61,7 +61,8 @@ openshift-install --dir working agent wait-for install-complete --log-level=info
 
 ## GitHub OAuth
 
-1. Create GitHub Organization and update `./github/oauth.yaml`
+1. Create GitHub Organization and update `./github/oauth.yaml`,
+making sure to lowercase the name
 
 2. Create GitHub OAuth app with info and get the generated Client Id and Client Secret
 
