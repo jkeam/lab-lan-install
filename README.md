@@ -120,7 +120,8 @@ Plug flash into new node and boot from it.
 
 ```shell
 # apply static ip
-nmcli con mod "Wired connection 1" ipv4.method manual /
+nmcli con mod "Wired connection 1" /
+    ipv4.method manual /
     ipv4.addresses 192.168.1.203 /
     ipv4.gateway 192.168.1.1 /
     ipv4.dns 192.168.1.201
@@ -130,7 +131,8 @@ nmcli con down "Wired connection 1"
 nmcli con up "Wired connection 1"
 
 # run installer, /dev/nvme1n1 is where the installation is going
-sudo coreos-installer install --copy-network /
+sudo coreos-installer install /
+    --copy-network /
     --ignition-url=https://httpd-server-cluster-services.apps.lab.keam.org/images/new-worker.ign /
     /dev/nvme1n1 /
     --insecure-ignition
@@ -139,7 +141,7 @@ sudo coreos-installer install --copy-network /
 Approving Certs
 
 ```shell
-# look for pending cert, also check the UI to double verify
+# look for pending cert
 oc get csr
 # approve pending cert
 oc adm certificate approve csr-x9fls  # or whatever yours is called
