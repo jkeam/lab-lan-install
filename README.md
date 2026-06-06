@@ -122,8 +122,7 @@ Plug flash into new node and boot from it.
 nmcli con mod "Wired connection 1" ipv4.method manual /
     ipv4.addresses 192.168.1.203 /
     ipv4.gateway 192.168.1.1 /
-    ipv4.dns 192.169.1.201 /
-    802-3-ethernet.mtu 9000
+    ipv4.dns 192.168.1.201
 
 # restart
 nmcli con down "Wired connection 1"
