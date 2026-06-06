@@ -127,6 +127,9 @@ nmcli con mod "Wired connection 1" ipv4.method manual /
 # restart
 nmcli con down "Wired connection 1"
 nmcli con up "Wired connection 1"
+
+# run installer
+sudo coreos-installer install --copy-network --ignition-url=https://httpd-server-cluster-services.apps.lab.keam.org/images/new-worker.ign /dev/nvme1n1 --insecure-ignition
 ```
 
 ## Cert Manager
