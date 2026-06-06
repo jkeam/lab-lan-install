@@ -128,8 +128,20 @@ nmcli con mod "Wired connection 1" ipv4.method manual /
 nmcli con down "Wired connection 1"
 nmcli con up "Wired connection 1"
 
-# run installer
-sudo coreos-installer install --copy-network --ignition-url=https://httpd-server-cluster-services.apps.lab.keam.org/images/new-worker.ign /dev/nvme1n1 --insecure-ignition
+# run installer, /dev/nvme1n1 is where the installation is going
+sudo coreos-installer install --copy-network /
+    --ignition-url=https://httpd-server-cluster-services.apps.lab.keam.org/images/new-worker.ign /
+    /dev/nvme1n1 /
+    --insecure-ignition
+```
+
+Approving Certs
+
+```shell
+# look for pending cert, also check the UI to double verify
+oc get csr
+# approve pending cert
+oc adm certificate approve csr-x9fls  # or whatever yours is called
 ```
 
 ## Cert Manager
