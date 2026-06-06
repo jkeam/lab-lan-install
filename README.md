@@ -93,16 +93,17 @@ From my linux desktop:
 
 ```shell
 # grab the worker ign
-oc extract -n openshift-machine-api secret/worker-user-data-managed --keys=userData --to=- > worker.ign
+oc extract -n openshift-machine-api secret/worker-user-data-managed --keys=userData --to=- > ./workers/worker.ign
 
 # we already created the new-worker.ign
 cat ./workers/new-worker.ign
 
 # download the right version of the linux installer
-curl -k "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.19/openshift-install-linux.tar.gz" > openshift-install-linux.tar.gz
+curl -k "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest-4.21/openshift-install-linux.tar.gz" > openshift-install-linux.tar.gz
 
 # download ISO
-ISO_URL=$(./openshift-install coreos print-stream-json | grep location | grep x86_64 | grep iso | cut -d\" -f4)
+#  bug in the docs, they forgot to add jq
+ISO_URL=$(./openshift-install coreos print-stream-json | jq | grep location | grep x86_64 | grep iso | cut -d\" -f4)
 curl -L $ISO_URL -o rhcos-live.iso
 
 # same as before
