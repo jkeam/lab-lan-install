@@ -143,7 +143,7 @@ Approving Certs
 ```shell
 # look for pending cert
 oc get csr
-# approve pending cert
+# approve pending cert, will need to do this a few times
 oc adm certificate approve csr-x9fls  # or whatever yours is called
 ```
 
