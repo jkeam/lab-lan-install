@@ -150,10 +150,11 @@ oc adm certificate approve csr-x9fls  # or whatever yours is called
 ## Cert Manager
 
 ```shell
-# create digital ocean api key
+# create digitalocean api key
+# you need CRUD access to "domains"
 oc apply -f ./cert-manager/secret.yaml  # replace key
 
-# hook into let's encrypt using the digital ocean dns challenge
+# hook into let's encrypt using the digitalocean dns challenge
 oc apply -f ./cert-manager/issuer.yaml
 
 # create api cert, wait 2 min to create
